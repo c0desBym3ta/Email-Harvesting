@@ -29,7 +29,7 @@ echo "#"
 #                 `-._                   _.-'
 #                     `"'--...___...--'"`
 #
-echo "#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.0"
+echo "#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.1"
 
 echo ""
 read -n1 -r -p "Press any key to continue..." key

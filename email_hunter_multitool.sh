@@ -1,18 +1,18 @@
 #!/usr/bin/env bash 
-#
-# This is a super simple way to check for email after a given domain. Here's how it works:
-#
-#     - Mail the script executable: chmod +x email_hunter_multitool.sh
-#     - Run the script ./email_hunter_multitool.sh domain.com emails_found.txt
-#     - Enter the path to save results
-#
-# This script uses a set of tools to search for mails given a certain domain and then saves the ouput to a txt file.
-# After finding emeils you can chooise id you want to search those email for breached credentials using h8mail.
-# Here are the tools that the script is using for the moment. (theHarvester emailHarvester, skymem website, h8mail).
-#
-# Please before running the script, ensure that all the required tools are installed.
-#
-#
+
+echo "# This is a super simple way to check for email after a given domain. Here's how it works:"
+echo "#"
+echo "#     - Mail the script executable: chmod +x email_hunter_multitool.sh"
+echo "#     - Run the script ./email_hunter_multitool.sh domain.com emails_found.txt"
+echo "#     - Enter the path to save results"
+echo "#"
+echo "# This script uses a set of tools to search for mails given a certain domain and then saves the ouput to a txt file."
+echo "# After finding emeils you can chooise id you want to search those email for breached credentials using h8mail."
+echo "# Here are the tools that the script is using for the moment. (theHarvester emailHarvester, skymem website, h8mail)."
+echo "#"
+echo "# Please before running the script, ensure that all the required tools are installed."
+echo "#"
+echo "#"
 #
 #              .__....._             _.....__,
 #                 .": o :':         ;': o :".
@@ -29,9 +29,11 @@
 #                 `-._                   _.-'
 #                     `"'--...___...--'"`
 #
-#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.0
+echo "#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.0"
 
-
+echo ""
+read -n1 -r -p "Press any key to continue..." key
+echo ""
 
 ## First and only argument
 domain_name=$1

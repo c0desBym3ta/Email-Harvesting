@@ -1,8 +1,41 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash 
+#
+# This is a super simple way to check for email after a given domain. Here's how it works:
+#
+#     - Mail the script executable: chmod +x email_hunter_multitool.sh
+#     - Run the script ./email_hunter_multitool.sh domain.com
+#     - Enter the path to save results
+#
+# This script uses a set of tools to search for mails given a certain domain and then saves the ouput to a txt file.
+# After finding emeils you can chooise id you want to search those email for breached credentials using h8mail.
+# Here are the tools that the script is using for the moment. (theHarvester emailHarvester, skymem website, h8mail).
+#
+# Please before running the script, ensure that all the required tools are installed.
+#
+#
+#
+#              .__....._             _.....__,
+#                 .": o :':         ;': o :".
+#                 `. `-' .'.       .'. `-' .'
+#                   `---'             `---'
+#
+#         _...----...      ...   ...      ...----..._
+#      .-'__..-""'----    `.  `"`  .'    ----'""-..__`-.
+#     '.-'   _.--"""'       `-._.-'       '"""--._   `-.`
+#     '  .-"'                  :                  `"-.  `
+#       '   `.              _.'"'._              .'   `
+#             `.       ,.-'"       "'-.,       .'
+#               `.                           .'
+#                 `-._                   _.-'
+#                     `"'--...___...--'"`
+#
+#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.0
+
 
 
 ## First and only argument
 domain_name=$1
+
 
 ## Setting up colors
 RED="\e[31m"

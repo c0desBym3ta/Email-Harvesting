@@ -46,6 +46,7 @@ YELLOW="\e[33m"
 ENDCOLOR="\e[0m"
 
 ## Empty file variable
+temp="temp_file.txt"
 breached_credentials="breached_credentials.txt"
 
 ## Create empty file to save all emails
@@ -83,7 +84,9 @@ do
 done
 echo -e "${GREEN}[+] Skymem.info done... $(cat $2 | sort -u | wc -l ) emails saved now on $2${ENDCOLOR}"
 
-awk '!a[$0]++' $2 > $temp && mv $temp $2
+
+cp $2 $temp
+awk '!a[$0]++' $temp > $2
 result=$(cat $2 | sort -u | wc -l)
 echo -e "${GREEN}[+] A total of ${result} emails has been found!${ENDCOLOR}"
 

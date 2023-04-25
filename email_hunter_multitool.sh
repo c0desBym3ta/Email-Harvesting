@@ -1,5 +1,5 @@
 #!/usr/bin/env bash 
-
+clear
 echo "# This is a super simple way to check for email after a given domain. Here's how it works:"
 echo "#"
 echo "#     - Mail the script executable: chmod +x email_hunter_multitool.sh"
@@ -11,7 +11,7 @@ echo "# After finding emeils you can chooise id you want to search those email f
 echo "# Here are the tools that the script is using for the moment. (theHarvester emailHarvester, skymem website, h8mail)."
 echo "#"
 echo "# Please before running the script, ensure that all the required tools are installed."
-echo "#"
+echo "# NOTE: Note that theHarvester and emailHarvester are commented so they are not actually working because the are really slow, please remove the comment if you want to use them."
 echo "#"
 #
 #              .__....._             _.....__,
@@ -29,11 +29,11 @@ echo "#"
 #                 `-._                   _.-'
 #                     `"'--...___...--'"`
 #
-echo "#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 1.1"
+echo "#   Author: m3ta		Email: m3tahckr@protonmail.com			Version: 2.0"
 
 echo ""
 read -n1 -r -p "Press any key to continue..." key
-echo ""
+clear
 
 ## First and only argument
 domain_name=$1
@@ -50,17 +50,23 @@ breached_credentials="breached_credentials.txt"
 
 ## Create empty file to save all emails
 touch $2
-echo "" > $2
+sed -i d $2
 
 ## Fire up theHarvester
 echo -e "${YELLOW}[\] Searching emails using theHarverster...${ENDCOLOR}"
 ## theHarvester -d $domain_name -b all | grep "@" > $2
-echo -e "${GREEN}[+] theHarvester done... Emails saved on $2${ENDCOLOR}"
+echo -e "${GREEN}[+] theHarvester done... $(cat $2 | sort -u | wc -l ) emails saved on $2${ENDCOLOR}"
 
 ## Fire up emailHarvester
 echo -e "${YELLOW}[\] Searching emails using emailHarverster...${ENDCOLOR}"
 ## emailharvester -d $domain_name -l 10 | grep "@" >> $2
-echo -e "${GREEN}[+] emailHarvester done... Emails saved on $2${ENDCOLOR}"
+echo -e "${GREEN}[+] emailHarvester done... $(cat $2 | sort -u | wc -l ) emails saved on $2${ENDCOLOR}"
+
+## Curling from crt.sh website
+echo -e "${YELLOW}[\] Searching emails on crt.sh...${ENDCOLOR}"
+crtsh=$(curl -s https://crt.sh/?q=$1)
+curl -s https://crt.sh/?q=$1 | grep "@"  | awk -F'[<>]' '{for(i=2;i<=NF;i++){if($i~/@/) print $i}}' | sort -u >> $2
+echo -e "${GREEN}[+] crt.sh is done... $(cat $2 | sort -u | wc -l ) emails saved now  on $2${ENDCOLOR}"
 
 ## Curling from skymem website
 startpage=1
@@ -75,10 +81,11 @@ do
     emails=$(curl -s http://www.skymem.info/domain/$skymem$i | grep "$company_name" | grep '<a href="/srch?q=' | sed '1d' | sed -e 's/<[^>]*>//g' | sed -e 's/^[ \t]*//')
     echo "$emails" >> $2
 done
-echo -e "${GREEN}[+] Skymem.info done... Emails saved on $2${ENDCOLOR}"
+echo -e "${GREEN}[+] Skymem.info done... $(cat $2 | sort -u | wc -l ) emails saved now on $2${ENDCOLOR}"
 
-result=$(cat $2 | wc -l)
-echo -e "${GREEN}[+] ${result} emails has been found${ENDCOLOR}"
+awk '!a[$0]++' $2 > $temp && mv $temp $2
+result=$(cat $2 | sort -u | wc -l)
+echo -e "${GREEN}[+] A total of ${result} emails has been found!${ENDCOLOR}"
 
 read -p "Do you want to view the emails found?: (y/n): " view
 if [[ $view == "y" || $view == "Y" || $view == "yes" ]]; then
@@ -97,7 +104,7 @@ if [[ $choice == "y" || $choice == "Y" || $choice == "yes" ]]; then
 
 	read -p "Do you want to view breached emails found? (y/n): "  view
 	if [[ $view == "y" || $view == "Y" || $view == "yes" ]]; then
-        	echo $breached_credentials
+        	cat $breached_credentials
         	echo " "
 	fi
 fi

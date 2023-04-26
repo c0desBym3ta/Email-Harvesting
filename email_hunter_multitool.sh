@@ -84,6 +84,9 @@ do
 done
 echo -e "${GREEN}[+] Skymem.info done... $(cat $2 | sort -u | wc -l ) emails saved now on $2${ENDCOLOR}"
 
+# sort and uniq of results e-mail
+cat $2 | sort | uniq > $temp
+cp $temp $2
 
 cp $2 $temp
 awk '!a[$0]++' $temp > $2
@@ -111,3 +114,6 @@ if [[ $choice == "y" || $choice == "Y" || $choice == "yes" ]]; then
         	echo " "
 	fi
 fi
+
+# delete of temp file
+rm -f $temp
